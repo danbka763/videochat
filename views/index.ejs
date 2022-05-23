@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Главная - VideoChat</title>
   <style>
+    input {outline:none;}
     body, html {
       width: 100%;
       height: 100%;
@@ -21,17 +22,43 @@
       border: 1px solid rgb(211, 211, 211);
       border-radius: 9px;
       width: 359px;
-      height: 499px;
       background-color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
     main>div>div {
       padding: 15px;
       height: 100%;
-      display: flex;
-      flex-direction: column;
     }
-    main>div>div>form>div {
-      margin: 20px 0;
+    main .button-container {
+      display: flex;
+      justify-content: center;
+    }
+    main>div>div>form>div.inputTextContainer {
+      margin-left: 25px;
+      margin-top: 5px;
+    }
+    main>div>div>form>div.inputTextContainer>input {
+      width: 190px;
+      padding: 3px 5px;
+      border: 1px solid rgb(212, 212, 212);
+      border-radius: 5px;
+    }
+    button {
+      padding: 5px 13px;
+      border: 0;
+      border-radius: 5px;
+      background-color: rgb(85, 153, 255);
+      color: #fff;
+      margin-top: 15px;
+    }
+    h2 {
+      color: rgb(85, 153, 255);
+      margin: 7px 0;
+    }
+    .inputContainer {
+      margin: 0;
     }
   </style>
 </head>
@@ -39,12 +66,14 @@
   <main>
     <div>
       <div>
-        Вход в конференцию
+        <h2>Вход в конференцию</h2>
         <form action="/" method="POST">
-          <div>
-            <input type="text" name="roomId" placeholder="Введите ключ конференции">
+          <div class="inputContainer"><input type="radio" id="radioTrue" checked onclick="clickRadio(true)"> Создать новую комнату</div>
+          <div class="inputContainer"><input type="radio" id="radioFalse" onclick="clickRadio(false)"> Войти по ключу конференции</div>
+          <div class="inputTextContainer">
+            <input id="key" type="text" name="roomId" disabled placeholder="Введите ключ конференции">
           </div>
-          <div>
+          <div class="button-container">
             <button type="submit">Войти</button>
           </div>
         </form>
@@ -53,5 +82,23 @@
   </main>
 
   <script src="/public/js/main.js"></script>
+  <script>
+    function clickRadio(select) {
+      let r1 = document.getElementById('radioTrue'),
+          r2 = document.getElementById('radioFalse'),
+          key = document.getElementById('key')
+      
+      if (select) {
+        r1.checked = true
+        r2.checked = false
+        key.disabled = true
+        key.value = ""
+      } else {
+        r1.checked = false
+        r2.checked = true
+        key.disabled = false
+      }
+    }
+  </script>
 </body>
 </html>
